@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fuel Price Predictor</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google" content="notranslate" />
+
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'img/favicon.ico' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/robotogooglefonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+  </head>
+
+  <body>
+    <div class="d-flex" id="wrapper">
+      {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          {% block content %} {% endblock content %}
+        </div>
+        <div class="logout">
+          <span>Logged in as {{loginuser}} </span><a href="/"> Logout</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

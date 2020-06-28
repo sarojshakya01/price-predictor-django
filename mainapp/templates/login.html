@@ -1,0 +1,24 @@
+{% extends "form-base.html" %} {% block content %}
+
+<div class="main">
+  <form action="/login" method="post">
+    <h1><span>User</span> <lable> Login </lable></h1>
+    <div class="inset">
+      {% if messages %}
+      <div class="alert alert-danger">
+        {% for message in messages %}
+        <span>{{message}}</span>
+        {% endfor %}
+      </div>
+      {% endif%} {% csrf_token %} {{form}}
+      <!-- <span><a href="#">Forgot password ?</a></span> -->
+    </div>
+
+    <p class="p-container">
+      <span class="link"><a href="register">Register Now</a></span>
+      <input type="submit" value="Login" />
+    </p>
+  </form>
+</div>
+
+{%endblock%}

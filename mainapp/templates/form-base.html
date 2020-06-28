@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fuel Price Predictor</title>
+
+    <meta name="google" content="notranslate" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- <script src="lib/bootstrap/bootstrap.min.js"></script> -->
+    <!-- <script src="lib/jquery/jquery-1.11.1.min.js"></script> -->
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'img/favicon.ico' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/robotogooglefonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+  </head>
+  <body>
+    <div class="card">
+      {% block content %} {% endblock content %}
+    </div>
+  </body>
+</html>

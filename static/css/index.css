@@ -1,0 +1,94 @@
+body {
+  overflow-x: hidden;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  background-color: #fdfdfd;
+}
+
+.head_text {
+  color: white;
+}
+
+.card {
+  box-shadow: 0 16px 48px #e3e7eb;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+.fuel-quote {
+  padding: 20px;
+  background-color: #fbfbfb;
+  border-radius: 5px;
+}
+
+.fuel-quote-history.table {
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+footer {
+  font-size: 12px;
+}
+
+.page-heading {
+  margin-top: 10px;
+}
+
+.logout {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 15px;
+}
+
+.active {
+  background-color: #007bff !important;
+}
+
+#sidebar-wrapper a:hover {
+  background-color: gray !important;
+  border-color: gray;
+  color: white;
+}

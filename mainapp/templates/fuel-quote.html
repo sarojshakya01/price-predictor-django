@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block content %}
+<h2 class="page-heading">Fuel Quote</h2>
+<div class="main card">
+  {% if messages %}
+  <div class="alert alert-danger">
+    {% for message in messages %}
+    <span>{{message}}</span>
+    {% endfor %}
+  </div>
+  {% endif%}
+  <form class="fuel-quote" action="/quote" method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="id_gallonreq">Gallons Requested:</label>
+        {{form.gallonreq}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="id_deladdress">Delivery Address:</label>
+        {{form.deladdress}}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="id_deliverydate">Delivery Date:</label>
+        {{form.deliverydate}}
+      </div>
+      <div class="form-group col-md-6">
+        <label for="id_suggprice">Suggested Price per Gallon (USD):</label>
+        {{form.suggprice}}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6"></div>
+      <div class="form-group col-md-6">
+        <label for="id_deuamount">Total Amount Due (USD):</label>
+        {{form.deuamount}}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{%endblock%}

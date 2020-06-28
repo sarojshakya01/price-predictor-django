@@ -1,0 +1,35 @@
+{% block sidebar %}
+
+<div class="bg-light border-right" id="sidebar-wrapper">
+  <div class="sidebar-heading">Fuel Price Predictor</div>
+  <div class="list-group list-group-flush">
+    <a
+      id="quote"
+      href="quote"
+      class="list-group-item list-group-item-action bg-light"
+      >Fuel Quote</a
+    >
+    <a
+      id="history"
+      href="history"
+      class="list-group-item list-group-item-action bg-light"
+      >Fuel Quote History</a
+    >
+  </div>
+  <footer class="py-3 bg-grey">
+    <p class="m-0 text-dark text-center">
+      Copyright &copy; Fuel Price Predictor {% now 'Y' %}
+    </p>
+  </footer>
+</div>
+<script>
+  var url = window.location.href;
+  if (url.indexOf("/history") > -1) {
+    $("#quote").removeClass("active");
+    $("#history").addClass("active");
+  } else {
+    $("#history").removeClass("active");
+    $("#quote").addClass("active");
+  }
+</script>
+{% endblock sidebar %}

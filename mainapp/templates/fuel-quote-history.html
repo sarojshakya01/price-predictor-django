@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}{% load mathfilters %}
+<h2 class="page-heading">Fuel Quote History</h2>
+<div class="main card">
+  <table class="fuel-quote-history table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">S.N.</th>
+        <th scope="col">Gallons Requested</th>
+        <th scope="col">Delivery Address</th>
+        <th scope="col">Delivery Date</th>
+        <th scope="col">Suggested Price per Gallon</th>
+        <th scope="col">Total Amount Due</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr>
+        <td scope="row">{{row.id}}</td>
+        <td>{{row.req_gallons}}</td>
+        <td>{{row.del_address}}</td>
+        <td>{{row.delivery_date}}</td>
+        <td>{{row.sugg_price}}</td>
+        <td>{{row.req_gallons|mul:row.sugg_price}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{%endblock%}
