@@ -3,3 +3,5 @@
 /mainapp/__pycache__
 /fuelpricepredictor/__pycache__
 /cover
+
+*.pyc
