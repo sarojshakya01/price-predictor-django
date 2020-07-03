@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp',
-    'mathfilters'
+    'mathfilters',
+    'django_nose'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,13 @@ STATIC_URL = '/static/'
 
 # Location of static files
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'mainapp'
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=mainapp',
+    '--cover-html'
+]
