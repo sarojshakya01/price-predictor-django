@@ -1,4 +1,5 @@
 from django import forms
+from .models import States
 
 
 class LoginForm(forms.Form):
@@ -21,14 +22,12 @@ class RegisterForm(forms.Form):
 
 
 class UserProfileForm(forms.Form):
-    OPTIONS = (
-        ('', 'Select State'),
-        ('TX', 'Texas'),
-        ('NY', 'New York'),
-        ('SD', 'South Dakota'),
-        ('ND', 'North Dakota'),
-        ('CA', 'California'),
-    )
+    OPTIONS = [('', 'Select State')]
+    if(States):
+        states = States.objects.all()
+        for state in states:
+            OPTIONS.append((state.code, state.name))
+
     fullname = forms.CharField(label='Full Name', required=False, max_length=50,
                                widget=forms.TextInput(attrs={'placeholder': "Full Name"}))
 
@@ -53,14 +52,14 @@ class FuelQUoteForm(forms.Form):
     gallonreq = forms.CharField(required=True,
                                 widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}))
 
-    deladdress = forms.CharField(required=False, disabled=True,
-                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
+    deladdress = forms.CharField(required=False,
+                                 widget=forms.TextInput(attrs={'readonly': '', 'class': 'form-control'}))
 
     deliverydate = forms.CharField(required=False,
                                    widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'date'}))
 
-    suggprice = forms.CharField(required=False, disabled=True,
-                                widget=forms.NumberInput(attrs={'class': 'form-control', 'step': 'any'}))
+    suggprice = forms.CharField(required=False,
+                                widget=forms.NumberInput(attrs={'readonly': '', 'class': 'form-control', 'step': 'any'}))
 
-    deuamount = forms.CharField(required=False, disabled=True,
-                                widget=forms.NumberInput(attrs={'class': 'form-control', 'step': 'any'}))
+    deuamount = forms.CharField(required=False,
+                                widget=forms.NumberInput(attrs={'readonly': '', 'class': 'form-control', 'step': 'any'}))

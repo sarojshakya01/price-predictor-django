@@ -1,6 +1,7 @@
 .coverage
 
 /mainapp/__pycache__
+/mainapp/migrations
 /mainapp/migrations/__pycache__
 /fuelpricepredictor/__pycache__
 /cover
