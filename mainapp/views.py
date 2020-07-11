@@ -82,8 +82,8 @@ def register(request):
 
 
 def user_profile(request):
-    initial_data = {'fullname': 'New User', 'address_1': 'Houston, Texas',
-                    'address_2': 'Houston, Texas', 'city': 'Houston', 'state': 'TX', 'zip': '123456'}
+    initial_data = {'fullname': '', 'address_1': '',
+                    'address_2': '', 'city': '', 'state': '', 'zip': ''}
 
     if request.method == 'POST':
 
