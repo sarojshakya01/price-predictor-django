@@ -188,7 +188,7 @@ def fuel_quote_history(request):
         userid=user).exists()
     if session_exist:
         session = Sessions.objects.get(
-            userid=user)
+            userid=user).status
     if session:
         rows = FuelQuotes.objects.filter(userid=user).order_by("quoteid")
         data = []

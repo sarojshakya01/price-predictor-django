@@ -65,6 +65,10 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, FORM_SUBMITTED)
 
     def test_user_profile_fail(self):
+        session = self.client.session
+        session['username'] = 'testuser'
+        session['password'] = 'test123'
+        session.save()
         response = self.client.post(
             'http://127.0.0.1:8000/create_profile', {'fullname': '', 'address1': 'Test Address'})
         self.assertEqual(response.status_code, PAGE_FOUND)
