@@ -92,3 +92,8 @@ footer {
   border-color: gray;
   color: white;
 }
+
+.logout-btn {
+  border: none;
+  cursor: pointer;
+}

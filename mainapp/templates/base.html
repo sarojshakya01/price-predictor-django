@@ -28,7 +28,10 @@
           {% block content %} {% endblock content %}
         </div>
         <div class="logout">
-          <span>Logged in as {{loginuser}} </span><a href="/"> Logout</a>
+          <form action="/logout" method="get">
+            <span>Logged in as {{loginuser}} </span
+            ><button type="submit" class="logout-btn">Logout</button>
+          </form>
         </div>
       </div>
     </div>

@@ -1,6 +1,4 @@
 from django.db import models
-from django import forms
-from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 
 
@@ -17,6 +15,9 @@ class UserCredentials(models.Model):
 
     class Meta:
         ordering = ['-created_on']
+
+    def __unicode__(self):
+        return self.username
 
 
 class States(models.Model):
@@ -45,6 +46,9 @@ class ClientInformations(models.Model):
 
     class Meta:
         ordering = ['-created_on']
+
+    def __unicode__(self):
+        return self.fullname
 
 
 class FuelQuotes(models.Model):
