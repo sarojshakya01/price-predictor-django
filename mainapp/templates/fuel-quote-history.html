@@ -4,25 +4,29 @@
   <table class="fuel-quote-history table table-striped">
     <thead>
       <tr>
-        <th scope="col">S.N.</th>
-        <th scope="col">Gallons Requested</th>
+        <th scope="col" style="width: 100px;">S.N.</th>
+        <th scope="col" class="w-200">Gallons Requested</th>
         <th scope="col">Delivery Address</th>
-        <th scope="col">Delivery Date</th>
-        <th scope="col">Suggested Price per Gallon</th>
-        <th scope="col">Total Amount Due</th>
+        <th scope="col" class="w-150">Delivery Date</th>
+        <th scope="col" class="text-right w-220">Suggested Price per Gallon</th>
+        <th scope="col" class="text-right w-220">Total Amount Due</th>
       </tr>
     </thead>
     <tbody>
-      {% for row in data %}
+      {% if data %} {% for row in data %}
       <tr>
         <td scope="row">{{forloop.counter}}</td>
-        <td>{{row.req_gallons}}</td>
+        <td class="w-200">{{row.req_gallons}}</td>
         <td>{{row.del_address}}</td>
-        <td>{{row.delivery_date}}</td>
-        <td>{{row.sugg_price}}</td>
-        <td>{{row.req_gallons|mul:row.sugg_price}}</td>
+        <td class="w-150">{{row.delivery_date}}</td>
+        <td class="text-right w-220">{{row.sugg_price}}</td>
+        <td class="text-right w-220">{{row.due_amount}}</td>
       </tr>
-      {% endfor %}
+      {% endfor %} {% else %}
+      <tr aria-colspan="6">
+        <td colspan="6" class="text-center">No Record Found!</td>
+      </tr>
+      {% endif %}
     </tbody>
   </table>
 </div>

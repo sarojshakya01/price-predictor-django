@@ -47,19 +47,19 @@ class UserProfileForm(forms.Form):
                           widget=forms.TextInput())
 
 
-class FuelQUoteForm(forms.Form):
+class FuelQuoteForm(forms.Form):
 
     gallonreq = forms.CharField(required=True,
                                 widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '1'}))
 
     deladdress = forms.CharField(required=False,
-                                 widget=forms.TextInput(attrs={'readonly': '', 'class': 'form-control'}))
+                                 widget=forms.TextInput(attrs={'disabled': 'disabled', 'class': 'form-control'}))
 
     deliverydate = forms.CharField(required=False,
                                    widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'date'}))
 
     suggprice = forms.CharField(required=False,
-                                widget=forms.NumberInput(attrs={'readonly': '', 'class': 'form-control', 'step': 'any'}))
+                                widget=forms.NumberInput(attrs={'disabled': 'disabled', 'class': 'form-control', 'step': 'any'}))
 
     deuamount = forms.CharField(required=False,
-                                widget=forms.NumberInput(attrs={'readonly': '', 'class': 'form-control', 'step': 'any'}))
+                                widget=forms.NumberInput(attrs={'disabled': 'disabled', 'class': 'form-control', 'step': 'any'}))

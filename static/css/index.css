@@ -97,3 +97,28 @@ footer {
   border: none;
   cursor: pointer;
 }
+
+#error_msg {
+  color: red;
+  margin-top: 20px;
+}
+
+.w-220 {
+  /* width: 220px; */
+  max-width: 220px;
+}
+
+.w-200 {
+  /* width: 200px; */
+  max-width: 200px;
+}
+
+.w-150 {
+  /* width: 150px; */
+  max-width: 150px;
+}
+
+.w-100 {
+  /* width: 100px; */
+  max-width: 100px;
+}

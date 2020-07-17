@@ -1,16 +1,11 @@
 from datetime import datetime
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib import messages
 from .models import *
-from .forms import LoginForm, RegisterForm, UserProfileForm, FuelQUoteForm
-
-
-class PriceModule:
-    suggprice = 125
-
-    def get_price(self):
-        return self.suggprice
+from .forms import LoginForm, RegisterForm, UserProfileForm, FuelQuoteForm
+from .modules import Pricing
 
 
 def login(request):
@@ -38,7 +33,7 @@ def login(request):
                     session.save()
 
                 request.session['id'] = str(user.userid)
-                return HttpResponseRedirect('/quote')
+                return HttpResponseRedirect('/history')
             else:
                 messages.error(request, "Invalid Username or Password!")
         else:
@@ -148,35 +143,41 @@ def fuel_quote(request):
             userid=user).status
     if session:
         userinfo = ClientInformations.objects.get(userid=user)
-
-        data = {'gallonreq': '', 'deladdress': userinfo.address1,
-                'deliverydate': str(datetime.today().strftime('%Y-%m-%d')), 'suggprice': '', 'deuamount': ''}
+        username = UserCredentials.objects.get(userid=user).username
+        state_name = States.objects.get(code=userinfo.state).name
+        del_address = (userinfo.address1 + (', ' + userinfo.address2 if len(userinfo.address2) > 0 else '') + ', ' +
+                       userinfo.city + ', ' + userinfo.zipcode + ', ' + state_name)
+        # today = str(datetime.today().strftime('%Y-%m-%d'))
+        data = {'gallonreq': '', 'deladdress': del_address,
+                'deliverydate': None, 'suggprice': '', 'deuamount': ''}
 
         if request.method == 'POST':
-            form = FuelQUoteForm(request.POST)
+            form = FuelQuoteForm(request.POST)
 
             if form.is_valid() and int(form.cleaned_data['gallonreq']) > 0:
-                form.cleaned_data['suggprice'] = '0'
-                form.cleaned_data['deuamount'] = '0'
+                pricing = Pricing()
+                req_gallons = int(form.cleaned_data['gallonreq'])
+                sugg_price = pricing.get_suggested_price(user, req_gallons)
+                sugg_price = round(sugg_price, 4)
+                amount_due = round((sugg_price * req_gallons), 4)
                 fuelquote = FuelQuotes(
                     userid=UserCredentials.objects.get(
-                        userid=user),  # hardcode for now
-
-                    req_gallons=int(form.cleaned_data['gallonreq']),
-                    del_address=form.cleaned_data['deladdress'],
+                        userid=user),
+                    req_gallons=req_gallons,
+                    del_address=del_address,
                     delivery_date=datetime.strptime(
                         form.cleaned_data['deliverydate'], '%Y-%m-%d'),
-                    sugg_price=float(form.cleaned_data['suggprice']),
-                    due_amount=float(form.cleaned_data['deuamount']))
+                    sugg_price=sugg_price,
+                    due_amount=amount_due)
                 fuelquote.save()
                 return HttpResponseRedirect('/history')
             else:
                 messages.error(request, "Data you entered is not valid!")
 
         else:
-            form = FuelQUoteForm(initial=data)
+            form = FuelQuoteForm(initial=data)
 
-        return render(request, 'fuel-quote.html', {'form': form, 'loginuser': 'demouser', 'quote_active': True})
+        return render(request, 'fuel-quote.html', {'form': form, 'loginuser': username, 'quote_active': True})
     else:
         return HttpResponseRedirect('/login')
 
@@ -190,15 +191,16 @@ def fuel_quote_history(request):
         session = Sessions.objects.get(
             userid=user).status
     if session:
+        username = UserCredentials.objects.get(userid=user).username
         rows = FuelQuotes.objects.filter(userid=user).order_by("quoteid")
         data = []
         for row in rows:
-            a = {'id': row.quoteid, "req_gallons": row.req_gallons,
-                 "del_address":  row.del_address, "delivery_date":  row.delivery_date, "sugg_price":  row.sugg_price, "total_amount": 0}
-            data.append(a)
+            quote = {'id': row.quoteid, "req_gallons": row.req_gallons,
+                     "del_address":  row.del_address, "delivery_date":  row.delivery_date.strftime('%Y-%m-%d'), "sugg_price":  row.sugg_price, "due_amount": row.due_amount}
+            data.append(quote)
 
         if request.method == 'GET':
-            return render(request, 'fuel-quote-history.html', {'data': data, 'loginuser': 'demouser', 'history_active': True})
+            return render(request, 'fuel-quote-history.html', {'data': data, 'loginuser': username, 'history_active': True})
     else:
         return HttpResponseRedirect('/login')
 
@@ -233,3 +235,19 @@ def is_state_valid(state):
 
 def is_zip_valid(zip):
     return len(zip) > 4 and len(zip) <= 9
+
+
+def suggested_price(request):
+    if request.method == 'POST':
+        gallon_req = int(request.POST['gallon_req'])
+        if gallon_req > 0:
+            user = int(request.session['id'])
+            pricing = Pricing()
+            sugg_price = pricing.get_suggested_price(user, gallon_req)
+            sugg_price = round(sugg_price, 4)
+            amount_due = round((sugg_price * gallon_req), 4)
+            return JsonResponse({'status': 'ok', 'sugg_price': sugg_price, 'amount_due': amount_due})
+        else:
+            return JsonResponse({'status': 'error', 'error': 'Invalid Request'})
+    else:
+        return JsonResponse({'status': 'error', 'error': 'Invalid Request'})

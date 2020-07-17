@@ -37,7 +37,63 @@
         {{form.deuamount}}
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button
+      type="button"
+      disabled="disabled"
+      id="get_quote"
+      class="btn btn-primary"
+    >
+      Get Quote
+    </button>
+    <button
+      type="submit"
+      disabled="disabled"
+      id="submit_quote"
+      class="btn btn-primary"
+    >
+      Submit Quote
+    </button>
+    <p id="error_msg"></p>
   </form>
 </div>
-{%endblock%}
+{% block javascript %}
+<script>
+  $("#get_quote").on("click", function () {
+    $.ajax({
+      url: "/suggested_price",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        gallon_req: $("#id_gallonreq").val(),
+      },
+      method: "post",
+    })
+      .done(function (data) {
+        $("#id_suggprice").val(data["sugg_price"]);
+        $("#id_deuamount").val(data["amount_due"]);
+        $("#submit_quote").attr("disabled", false);
+        $("#error_msg").html("");
+        $("#error_msg").hide();
+      })
+      .fail(function () {
+        $("#error_msg").html("Request Failed! Please try again!");
+        $("#error_msg").show();
+      });
+  });
+
+  $("#id_gallonreq").on("keyup", function () {
+    if ($(this).val() > 0 && $("#id_deliverydate").val()) {
+      $("#get_quote").attr("disabled", false);
+    } else {
+      $("#get_quote").attr("disabled", true);
+    }
+  });
+
+  $("#id_deliverydate").on("change", function () {
+    if ($("#id_gallonreq").val() > 0 && $(this).val()) {
+      $("#get_quote").attr("disabled", false);
+    } else {
+      $("#get_quote").attr("disabled", true);
+    }
+  });
+</script>
+{% endblock %} {%endblock%}

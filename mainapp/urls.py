@@ -9,5 +9,6 @@ urlpatterns = [
     path('create_profile', views.user_profile),
     path('quote', views.fuel_quote),
     path('history', views.fuel_quote_history),
-    path('logout', views.logout)
+    path('logout', views.logout),
+    path('suggested_price', views.suggested_price)
 ]

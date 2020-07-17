@@ -14,10 +14,11 @@ class ViewsTestCase(TestCase):
         cls.usercreds = UserCredentials.objects.create(userid=1, username='testuser', password='test123',
                                                        confirm_password='test123')
         cls.sesson = Sessions.objects.create(userid=1, status=True)
-        cls.userinfo = ClientInformations.objects.create(userid=cls.usercreds, fullname='Test User', address1='Houston',
+        cls.userinfo = ClientInformations.objects.create(userid=cls.usercreds, fullname='Test User', address1='Houston', state="TX",
                                                          address2='')
         cls.history = FuelQuotes.objects.create(userid=cls.usercreds,  req_gallons=200, del_address=cls.userinfo.address1,
                                                 delivery_date=datetime.today().strftime('%Y-%m-%d'), sugg_price=0, due_amount=0)
+        cls.state = States.objects.create(stateid=1, code="TX", name="Texas")
 
     def test_app_run(self):
         # app is running
@@ -61,7 +62,7 @@ class ViewsTestCase(TestCase):
 
     def test_create_user(self):
         response = self.client.post(
-            'http://127.0.0.1:8000/register', {'username': 'newuser', 'password': '12345', 'confirm_password': '12345'})
+            'http://127.0.0.1:8000/register', {'username': 'testuser', 'password': 'test123', 'confirm_password': 'test123'})
         self.assertEqual(response.status_code, FORM_SUBMITTED)
 
     def test_user_profile_fail(self):
@@ -96,6 +97,30 @@ class ViewsTestCase(TestCase):
         response = self.client.get(
             'http://127.0.0.1:8000/quote')
         self.assertEqual(response.status_code, FORM_SUBMITTED)
+
+    def test_postSuggPrice(self):
+        session = self.client.session
+        session['id'] = '1'
+        session.save()
+        response = self.client.post(
+            'http://127.0.0.1:8000/suggested_price', {'gallon_req': 2000})
+        self.assertEqual(response.status_code, PAGE_FOUND)
+
+    def test_postSuggPriceFail(self):
+        session = self.client.session
+        session['id'] = '1'
+        session.save()
+        response = self.client.post(
+            'http://127.0.0.1:8000/suggested_price', {'gallon_req': 0})
+        self.assertEqual(response.status_code, PAGE_FOUND)
+
+    def test_getSuggPriceFail(self):
+        session = self.client.session
+        session['id'] = '1'
+        session.save()
+        response = self.client.get(
+            'http://127.0.0.1:8000/suggested_price', {'gallon_req': 10})
+        self.assertEqual(response.status_code, PAGE_FOUND)
 
     def test_getHistoy(self):
         session = self.client.session
