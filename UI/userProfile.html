@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Client Profile Management</title>
+    <link
+      href="lib/bootstrap/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link type="text/css" rel="stylesheet" href="index.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script></script>
+    <!--webfonts-->
+    <link href="<spring:url value='lib/googlefonts.css' type='text.css'/>" />
+    <!--//webfonts-->
+  </head>
+
+  <body>
+    <div class="main">
+      <h1 class="user-profile-heading">Client Profile Management</h1>
+      <form action="index.html" class="user-profile">
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fullname"
+            placeholder="Full Name"
+            maxlength="50"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="address1">Address 1</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address1"
+            placeholder="Address 1"
+            maxlength="100"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="address2">Address 2</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address2"
+            placeholder="Address 2"
+            maxlength="100"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="city">City</label>
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              maxlength="100"
+              required
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="state">State</label>
+            <select id="state" class="form-control" required>
+              <option selected>Select State</option>
+              <option value="TX">Texas</option>
+              <option value="NY">New York</option>
+              <option value="SD">South Dakota</option>
+              <option value="ND">North Dakota</option>
+              <option value="CA">California</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="zip">Zip</label>
+            <input
+              type="text"
+              class="form-control"
+              id="zip"
+              minlength="5"
+              maxlength="9"
+              required
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

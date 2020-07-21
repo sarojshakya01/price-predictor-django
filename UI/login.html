@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <link
+      href="lib/bootstrap/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link type="text/css" rel="stylesheet" href="login.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script></script>
+    <!--webfonts-->
+    <link href="<spring:url value='lib/googlefonts.css' type='text.css'/>" />
+    <!--//webfonts-->
+  </head>
+
+  <body>
+    <div class="main">
+      <form action="fuelQuoteHistory.html" method="post">
+        <h1><span>Client</span> <lable> Login </lable></h1>
+        <div class="inset">
+          <p>
+            <label for="userName">USER NAME</label>
+            <input type="text" placeholder="User Name" required />
+          </p>
+          <p>
+            <label for="password">PASSWORD</label>
+            <input type="password" placeholder="Password" required />
+          </p>
+          <p>
+            <!-- <span><a href="#">Forgot password ?</a></span> -->
+          </p>
+        </div>
+
+        <p class="p-container">
+          <span class="register"><a href="register.html">Register Now</a></span>
+          <input type="submit" value="Login" />
+        </p>
+      </form>
+    </div>
+  </body>
+</html>

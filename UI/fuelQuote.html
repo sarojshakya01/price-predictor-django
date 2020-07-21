@@ -1,0 +1,111 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fuel Quote</title>
+    <link
+      href="lib/bootstrap/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link type="text/css" rel="stylesheet" href="index.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script></script>
+    <!--webfonts-->
+    <link href="<spring:url value='lib/googlefonts.css' type='text.css'/>" />
+    <!--//webfonts-->
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Fuel Predictor</div>
+        <div class="list-group list-group-flush">
+          <a
+            href="fuelQuote.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Fuel Quote</a
+          >
+          <a
+            href="fuelQuoteHistory.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Fuel Quote History</a
+          >
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <h1 class="mt-4">Fuel Quote</h1>
+          <div class="main">
+            <form class="fuel-quote">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="gallonreq">Gallons Requested</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="gallonreq"
+                    value="100"
+                    required
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="deladdress">Delivery Address:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="deladdress"
+                    value="Client's Delivery Address"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="deldate">Deivery Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="deldate"
+                    maxlength="100"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="sugprice">Suggested Price per Gallon (USD)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    id="sugprice"
+                    value="250"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="deuamount">Total Amount Due (USD)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    id="deuamount"
+                    value="25000"
+                    disabled
+                  />
+                </div>
+                <div class="form-group col-md-6"></div>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+  </body>
+</html>

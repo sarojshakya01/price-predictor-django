@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    <link
+      href="lib/bootstrap/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link type="text/css" rel="stylesheet" href="index.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script></script>
+    <!--webfonts-->
+    <link href="<spring:url value='lib/googlefonts.css' type='text.css'/>" />
+    <!--//webfonts-->
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Fuel Predictor</div>
+        <div class="list-group list-group-flush">
+          <a
+            href="fuelQuote.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Fuel Quote</a
+          >
+          <a
+            href="fuelQuoteHistory.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Fuel Quote History</a
+          >
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <h1 class="mt-4">Dashboard</h1>
+          <div class="main">
+            <p>This is home page</p>
+          </div>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+  </body>
+</html>

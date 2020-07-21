@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Fuel Quote History</title>
+    <link
+      href="lib/bootstrap/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link type="text/css" rel="stylesheet" href="index.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script></script>
+    <!--webfonts-->
+    <link href="<spring:url value='lib/googlefonts.css' type='text.css'/>" />
+    <!--//webfonts-->
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Fuel Predictor</div>
+        <div class="list-group list-group-flush">
+          <a
+            href="fuelQuote.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Fuel Quote</a
+          >
+          <a
+            href="fuelQuoteHistory.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Fuel Quote History</a
+          >
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <h1 class="mt-4">Fuel Quote History</h1>
+          <div class="main">
+            <table class="fuel-quote-history table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">S.N.</th>
+                  <th scope="col">Gallons Requested</th>
+                  <th scope="col">Delivery Address</th>
+                  <th scope="col">Delivery Date</th>
+                  <th scope="col">Suggested Price per Gallon</th>
+                  <th scope="col">Total Amount Due</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>100</td>
+                  <td>Houston, Texas</td>
+                  <td>July 1, 2020</td>
+                  <td>150 USD</td>
+                  <td>15000 USD</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>100</td>
+                  <td>Houston, Texas</td>
+                  <td>July 1, 2020</td>
+                  <td>150 USD</td>
+                  <td>15000 USD</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>100</td>
+                  <td>Houston, Texas</td>
+                  <td>July 1, 2020</td>
+                  <td>150 USD</td>
+                  <td>15000 USD</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+  </body>
+</html>
