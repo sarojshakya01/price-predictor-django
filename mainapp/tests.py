@@ -45,8 +45,9 @@ class ViewsTestCase(TestCase):
         session = self.client.session
         session['username'] = 'testuser'
         session['password'] = 'test123'
+        session.save()
         response = self.client.get('http://127.0.0.1:8000/create_profile')
-        self.assertEqual(response.status_code, RIDIRECTED)
+        self.assertEqual(response.status_code, PAGE_FOUND)
 
     def test_login(self):
         response = self.client.post(
@@ -106,6 +107,11 @@ class ViewsTestCase(TestCase):
             'http://127.0.0.1:8000/quote')
         self.assertEqual(response.status_code, RIDIRECTED)
 
+    def test_getQuote_fail2(self):
+        response = self.client.get(
+            'http://127.0.0.1:8000/quote')
+        self.assertEqual(response.status_code, RIDIRECTED)
+
     def test_postSuggPrice(self):
         session = self.client.session
         session['id'] = '1'
@@ -130,7 +136,7 @@ class ViewsTestCase(TestCase):
             'http://127.0.0.1:8000/suggested_price', {'gallon_req': 10})
         self.assertEqual(response.status_code, PAGE_FOUND)
 
-    def test_getHistoy(self):
+    def test_getHistory(self):
         session = self.client.session
         session['id'] = '1'
         session.save()
@@ -138,10 +144,15 @@ class ViewsTestCase(TestCase):
             'http://127.0.0.1:8000/history')
         self.assertEqual(response.status_code, PAGE_FOUND)
 
-    def test_getHistoyfail(self):
+    def test_getHistoryfail(self):
         session = self.client.session
         session['id'] = '2'
         session.save()
+        response = self.client.get(
+            'http://127.0.0.1:8000/history')
+        self.assertEqual(response.status_code, RIDIRECTED)
+
+    def test_getHistoryfail2(self):
         response = self.client.get(
             'http://127.0.0.1:8000/history')
         self.assertEqual(response.status_code, RIDIRECTED)
@@ -152,6 +163,16 @@ class ViewsTestCase(TestCase):
         session['id'] = '1'
         session.save()
         response = self.client.get('http://127.0.0.1:8000/logout')
+        self.assertEqual(response.status_code, RIDIRECTED)
+
+    def test_logout_fail(self):
+        # logout fail
+        response = self.client.get('http://127.0.0.1:8000/logout')
+        self.assertEqual(response.status_code, RIDIRECTED)
+
+    def test_logout_fail2(self):
+        # logout fail
+        response = self.client.post('http://127.0.0.1:8000/logout')
         self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_random_page(self):
