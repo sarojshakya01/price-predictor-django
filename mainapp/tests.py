@@ -1,11 +1,11 @@
+from .models import *
 from django.test import TestCase
 from datetime import datetime
-from .models import *
+from django.utils import timezone
 
 PAGE_FOUND = 200
 PAGE_NOT_FOUND = 404
-FORM_SUBMITTED = 302
-FORM_SUBMIT_FAILED = 200
+RIDIRECTED = 302
 
 
 class ViewsTestCase(TestCase):
@@ -35,15 +35,23 @@ class ViewsTestCase(TestCase):
         response = self.client.get('http://127.0.0.1:8000/register')
         self.assertEqual(response.status_code, PAGE_FOUND)
 
+    def test_create_profile_page_get_fail(self):
+        # create profile page fail
+        response = self.client.get('http://127.0.0.1:8000/create_profile')
+        self.assertEqual(response.status_code, RIDIRECTED)
+
     def test_create_profile_page(self):
         # create profile page ok
+        session = self.client.session
+        session['username'] = 'testuser'
+        session['password'] = 'test123'
         response = self.client.get('http://127.0.0.1:8000/create_profile')
-        self.assertEqual(response.status_code, PAGE_FOUND)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_login(self):
         response = self.client.post(
             'http://127.0.0.1:8000/login', {'username': 'testuser', 'password': 'test123'})
-        self.assertEqual(response.status_code, FORM_SUBMITTED)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_login_fail(self):
         response = self.client.post(
@@ -63,7 +71,7 @@ class ViewsTestCase(TestCase):
     def test_create_user(self):
         response = self.client.post(
             'http://127.0.0.1:8000/register', {'username': 'testuser', 'password': 'test123', 'confirm_password': 'test123'})
-        self.assertEqual(response.status_code, FORM_SUBMITTED)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_user_profile_fail(self):
         session = self.client.session
@@ -80,7 +88,7 @@ class ViewsTestCase(TestCase):
     #     session.save()
     #     response = self.client.post(
     #         'http://127.0.0.1:8000/create_profile?id=1', {'fullname': 'Test User', 'address_1': 'Test Address', 'address_2': 'TEST', 'city': 'Test City', 'state': 'AB', 'zip': '23232'})
-    #     self.assertEqual(response.status_code, FORM_SUBMITTED)
+    #     self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_getQuote(self):
         session = self.client.session
@@ -96,7 +104,7 @@ class ViewsTestCase(TestCase):
         session.save()
         response = self.client.get(
             'http://127.0.0.1:8000/quote')
-        self.assertEqual(response.status_code, FORM_SUBMITTED)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_postSuggPrice(self):
         session = self.client.session
@@ -136,7 +144,7 @@ class ViewsTestCase(TestCase):
         session.save()
         response = self.client.get(
             'http://127.0.0.1:8000/history')
-        self.assertEqual(response.status_code, FORM_SUBMITTED)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_logout(self):
         # logout ok
@@ -144,7 +152,7 @@ class ViewsTestCase(TestCase):
         session['id'] = '1'
         session.save()
         response = self.client.get('http://127.0.0.1:8000/logout')
-        self.assertEqual(response.status_code, FORM_SUBMITTED)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
     def test_random_page(self):
         # random page not found ok
@@ -167,7 +175,7 @@ class ViewsTestCase(TestCase):
         session.save()
         response = self.client.post('http://127.0.0.1:8000/quote', {'userid': 1,  'gallonreq': '200', 'deladdress': 'Houston, Texas',
                                                                     'deliverydate': '2020-06-27', 'suggprice': '145.59', 'deuamount': '290000'})
-        self.assertEqual(response.status_code, FORM_SUBMITTED)
+        self.assertEqual(response.status_code, RIDIRECTED)
 
 
 class ModelTestCase(TestCase):

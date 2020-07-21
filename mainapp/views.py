@@ -47,14 +47,19 @@ def login(request):
 def logout(request):
 
     if request.method == 'GET':
-        user = UserCredentials.objects.get(
-            userid=int(request.session['id']))
+        if (request.session.has_key('id')):
+            user = UserCredentials.objects.get(
+                userid=int(request.session['id']))
 
-        if Sessions.objects.filter(
-                userid=user.userid).exists():
-            session = Sessions.objects.get(userid=user.userid)
-            session.status = False
-            session.save()
+            if Sessions.objects.filter(
+                    userid=user.userid).exists():
+                session = Sessions.objects.get(userid=user.userid)
+                session.status = False
+                session.save()
+            return HttpResponseRedirect('/login')
+        else:
+            return HttpResponseRedirect('/login')
+    else:
         return HttpResponseRedirect('/login')
 
 
@@ -74,7 +79,6 @@ def register(request):
                 request, "Short Password or Password did not match!")
     else:
         form = RegisterForm(initial=initial_data)
-
     return render(request, 'register.html', {'form': form.as_p})
 
 
@@ -128,79 +132,87 @@ def user_profile(request):
             messages.error(request, "Data you entered is not valid!")
 
     else:
-        form = UserProfileForm(initial=initial_data)
-
+        if request.session.has_key('username') and request.session.has_key('password'):
+            form = UserProfileForm(initial=initial_data)
+        else:
+            return HttpResponseRedirect('/register')
     return render(request, 'user-profile.html', {'form': form.as_p})
 
 
 def fuel_quote(request):
-    session = False
-    user = int(request.session['id'])
-    session_exist = Sessions.objects.filter(
-        userid=user).exists()
-    if session_exist:
-        session = Sessions.objects.get(
-            userid=user).status
-    if session:
-        userinfo = ClientInformations.objects.get(userid=user)
-        username = UserCredentials.objects.get(userid=user).username
-        state_name = States.objects.get(code=userinfo.state).name
-        del_address = (userinfo.address1 + (', ' + userinfo.address2 if len(userinfo.address2) > 0 else '') + ', ' +
-                       userinfo.city + ', ' + userinfo.zipcode + ', ' + state_name)
-        # today = str(datetime.today().strftime('%Y-%m-%d'))
-        data = {'gallonreq': '', 'deladdress': del_address,
-                'deliverydate': None, 'suggprice': '', 'deuamount': ''}
+    if (request.session.has_key('id')):
+        session = False
+        user = int(request.session['id'])
+        session_exist = Sessions.objects.filter(
+            userid=user).exists()
+        if session_exist:
+            session = Sessions.objects.get(
+                userid=user).status
+        if session:
+            userinfo = ClientInformations.objects.get(userid=user)
+            username = UserCredentials.objects.get(userid=user).username
+            state_name = States.objects.get(code=userinfo.state).name
+            del_address = (userinfo.address1 + (', ' + userinfo.address2 if len(userinfo.address2) > 0 else '') + ', ' +
+                           userinfo.city + ', ' + userinfo.zipcode + ', ' + state_name)
+            # today = str(datetime.today().strftime('%Y-%m-%d'))
+            data = {'gallonreq': '', 'deladdress': del_address,
+                    'deliverydate': None, 'suggprice': '', 'deuamount': ''}
 
-        if request.method == 'POST':
-            form = FuelQuoteForm(request.POST)
+            if request.method == 'POST':
+                form = FuelQuoteForm(request.POST)
 
-            if form.is_valid() and int(form.cleaned_data['gallonreq']) > 0:
-                pricing = Pricing()
-                req_gallons = int(form.cleaned_data['gallonreq'])
-                sugg_price = pricing.get_suggested_price(user, req_gallons)
-                sugg_price = round(sugg_price, 4)
-                amount_due = round((sugg_price * req_gallons), 4)
-                fuelquote = FuelQuotes(
-                    userid=UserCredentials.objects.get(
-                        userid=user),
-                    req_gallons=req_gallons,
-                    del_address=del_address,
-                    delivery_date=datetime.strptime(
-                        form.cleaned_data['deliverydate'], '%Y-%m-%d'),
-                    sugg_price=sugg_price,
-                    due_amount=amount_due)
-                fuelquote.save()
-                return HttpResponseRedirect('/history')
+                if form.is_valid() and int(form.cleaned_data['gallonreq']) > 0:
+                    pricing = Pricing()
+                    req_gallons = int(form.cleaned_data['gallonreq'])
+                    sugg_price = pricing.get_suggested_price(user, req_gallons)
+                    sugg_price = round(sugg_price, 4)
+                    amount_due = round((sugg_price * req_gallons), 4)
+                    fuelquote = FuelQuotes(
+                        userid=UserCredentials.objects.get(
+                            userid=user),
+                        req_gallons=req_gallons,
+                        del_address=del_address,
+                        delivery_date=datetime.strptime(
+                            form.cleaned_data['deliverydate'], '%Y-%m-%d'),
+                        sugg_price=sugg_price,
+                        due_amount=amount_due)
+                    fuelquote.save()
+                    return HttpResponseRedirect('/history')
+                else:
+                    messages.error(request, "Data you entered is not valid!")
+
             else:
-                messages.error(request, "Data you entered is not valid!")
+                form = FuelQuoteForm(initial=data)
 
+            return render(request, 'fuel-quote.html', {'form': form, 'loginuser': username, 'quote_active': True})
         else:
-            form = FuelQuoteForm(initial=data)
-
-        return render(request, 'fuel-quote.html', {'form': form, 'loginuser': username, 'quote_active': True})
+            return HttpResponseRedirect('/login')
     else:
         return HttpResponseRedirect('/login')
 
 
 def fuel_quote_history(request):
-    session = False
-    user = int(request.session['id'])
-    session_exist = Sessions.objects.filter(
-        userid=user).exists()
-    if session_exist:
-        session = Sessions.objects.get(
-            userid=user).status
-    if session:
-        username = UserCredentials.objects.get(userid=user).username
-        rows = FuelQuotes.objects.filter(userid=user).order_by("quoteid")
-        data = []
-        for row in rows:
-            quote = {'id': row.quoteid, "req_gallons": row.req_gallons,
-                     "del_address":  row.del_address, "delivery_date":  row.delivery_date.strftime('%Y-%m-%d'), "sugg_price":  row.sugg_price, "due_amount": row.due_amount}
-            data.append(quote)
+    if (request.session.has_key('id')):
+        session = False
+        user = int(request.session['id'])
+        session_exist = Sessions.objects.filter(
+            userid=user).exists()
+        if session_exist:
+            session = Sessions.objects.get(
+                userid=user).status
+        if session:
+            username = UserCredentials.objects.get(userid=user).username
+            rows = FuelQuotes.objects.filter(userid=user).order_by("quoteid")
+            data = []
+            for row in rows:
+                quote = {'id': row.quoteid, "req_gallons": row.req_gallons,
+                         "del_address":  row.del_address, "delivery_date":  row.delivery_date.strftime('%Y-%m-%d'), "sugg_price":  row.sugg_price, "due_amount": row.due_amount}
+                data.append(quote)
 
-        if request.method == 'GET':
-            return render(request, 'fuel-quote-history.html', {'data': data, 'loginuser': username, 'history_active': True})
+            if request.method == 'GET':
+                return render(request, 'fuel-quote-history.html', {'data': data, 'loginuser': username, 'history_active': True})
+        else:
+            return HttpResponseRedirect('/login')
     else:
         return HttpResponseRedirect('/login')
 
