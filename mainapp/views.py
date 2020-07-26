@@ -99,12 +99,19 @@ def user_profile(request):
         valid &= len(request.session['username']) > 0
         valid &= len(request.session['password']) > 0
         if (valid):
+            username = request.session['username']
 
-            user = UserCredentials(
-                username=request.session['username'],
-                password=request.session['password'],
-                confirm_password=request.session['password'])
-            user.save()
+            if (UserCredentials.objects.filter(username=username).exists()):
+                user = UserCredentials.objects.get(username=username)
+                user.password = request.session['password']
+                user.confirm_password = request.session['password']
+                user.save()
+            else:
+                user = UserCredentials(
+                    username=request.session['username'],
+                    password=request.session['password'],
+                    confirm_password=request.session['password'])
+                user.save()
             request.session.flush()
 
             if (ClientInformations.objects.filter(userid=user).exists()):
