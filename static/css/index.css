@@ -76,11 +76,22 @@ footer {
   margin-top: 10px;
 }
 
-.logout {
+.login-user {
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 30px;
   font-size: 15px;
+  min-width: 300px;
+}
+
+.login-user-warpper {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-profile {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .active {
