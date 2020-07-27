@@ -13,6 +13,10 @@ Price predictor using django
 7.  go to project directory using `cd fuelpricepredictor`
 8.  start the sub project using `python3 manage.py startapp mainapp`
 
+# Running Server
+
+- Run server using `python3 manage.py runserver
+
 # Migrtion Scripts
 
 After creating any database model, migrate the model using following commands.
