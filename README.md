@@ -16,19 +16,22 @@ Price predictor using django
 # Migrtion Scripts
 
 After creating any database model, migrate the model using following commands.
-`python3 manage.py makemigrations` to generate migration script files
-`python3 manage.py migrate` to migrate the migration scripts
+
+- `python3 manage.py makemigrations` to generate migration script files
+
+- `python3 manage.py migrate` to migrate the migration scripts
+
+- `python3 manage.py sqlmigrate mainapp 0001_initial` to migrate specific migration files
 
 # Create States records
 
-run the scripts of scipts folder
-`python3 manage.py sqlmigrate mainapp 0001_initial` to migrate specific migration files
+- run the scripts of scipts folder
 
 # If you are using django user tables
 
-Run `python3 manage.py createsuperuser` to create Django superuser
+- Run `python3 manage.py createsuperuser` to create Django superuser
 
 # Unit Tests and coverage reports
 
-Run `python3 manage.py test mainapp/tests.py` to run unit tests
-Run `coverage run python3 manage.py test mainapp/tests.py` to run uni tests and generate coverage reports
+- Run `python3 manage.py test mainapp/tests.py` to run unit tests
+- Run `coverage run python3 manage.py test mainapp/tests.py` to run uni tests and generate coverage reports
