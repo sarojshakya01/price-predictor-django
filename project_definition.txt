@@ -1,0 +1,98 @@
+Description: 
+Build a software application that will predict the rate of the fuel based on the following criteria:
+- Client Location (in-state or out-of-state)
+- Client history (existing customer with previous purchase or new)
+- Gallons requested
+- Company profit margin (%)
+
+Software must include following components:
+- Login (Allow Client to register if not a client yet)
+- Client Registration (Initially only username and Password)
+- Client Profile Management (after client registers they should login first to complete profile)
+- Fuel Quote Form with Pricing module (Once user enters all required information pricing module calculates the rate provides total cost)
+- Fuel Quote History
+
+
+Additional Details1:
+Front end must include following components:
+- Login (Allow Client to register if not a client yet)
+- Client Registration (Initially only username and Password)
+- Client Profile Management (After client registers they should login first to complete the profile). Following fields will be on Profile page / form:
+	- Full Name (50 characters, required)
+	- Address 1 (100 characters, required)
+	- Address 2 (100 characters, optional)
+	- City (100 characters, required)
+	- State (Drop Down, selection required) DB will store 2 character state code
+	- Zipcode (9 characters, at least 5 character code required)
+	
+- Fuel Quote Form with following fields: (We are not building pricing module yet)
+	- Gallons Requested (numeric, required)
+	- Delivery Address (Non-editable, comes from client profile)
+	- Delivery Date (Calender, date picker)
+	- Suggested Price / gallon (numeric non-editable, price will be calculated by Pricing Module - we are not building pricing module yet)
+	- Total Amount Due (numeric non-editable, calculated (gallons * price))
+	
+- Fuel Quote History
+	- Tabular display of all client quotes in the past. All fields from Fuel Quote are displayed.
+
+- You should have validations in place for required fields, field types, and field lengths. 
+
+
+
+Additional Details2:
+
+Back end must include following components/modules:
+- Login module
+- Client Profile Management module
+- Fuel Quote module, includes list of quote history for a client.
+- Pricing module. Only create a class. You will implement this in last assignment.
+
+Important deliverables:
+- You should have validations in place for required fields, field types, and field lengths in backend code as well. 
+- All backend code should be covered by unit tests. Code coverage should be grater than 80%. 
+- All front end should be connected to back end. Form data should be populated from backend. Backend should receive data from front end, validate, and prepare to persist to DB.
+
+
+
+Additional Details3:
+
+Database must include following tables:
+- UserCredentials (ID & password), password should be encrypted.
+- ClientInformation
+- FuelQuote
+- Any additional tables like States, Sessions.
+
+
+
+Additional Details4:
+
+Create a pricing module that should calculate the price per gallon based on this formula.
+
+Suggested Price = Current Price + Margin
+
+Where,
+
+Current price per gallon = $1.50 (this is the price what distributor gets from refinery and it varies based upon crude price. But we are keeping it constant for simplicity)
+Margin =  Current Price * (Location Factor - Rate History Factor + Gallons Requested Factor + Company Profit Factor)
+
+Consider these factors:
+Location Factor = 2% for Texas, 4% for out of state.
+Rate History Factor = 1% if client requested fuel before, 0% if no history (you can query fuel quote table to check if there are any rows for the client)
+Gallons Requested Factor = 2% if more than 1000 Gallons, 3% if less
+Company Profit Factor = 10% always
+
+Example:
+1500 gallons requested, in state, does have history (i.e. quote history data exist in DB for this client)
+
+Margin => (.02 - .01 + .02 + .1) * 1.50 = .195
+Suggested Price/gallon => 1.50 + .195 = $1.695
+Total Amount Due => 1500 * 1.695 = $2542.50
+
+Additional Validations:
+• Make suggested price and total amount fields in your Quote form read-only, i.e. user cannot enter these values.
+• Create another button on Quote Form before Submit, call it "Get Quote".
+• After user enters all other fields in the form other than Suggested Price and Total Amount, allow user to click on "Get Quote", i.e. Get Quote and Submit Quote buttons should be disabled if there are no values entered in the form. 
+• When user clicks on "Get Quote" button make a call to Pricing Module and populate the suggested price and total. 
+• Display Suggested Price and Total Amount once you get the values from pricing module. 
+• Make sure you do not lose any form values when you make a call to Pricing module.
+• Then user clicks on Submit Quote and you save the quote.
