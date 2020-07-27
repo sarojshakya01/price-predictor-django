@@ -15,7 +15,7 @@ Price predictor using django
 
 # Running Server
 
-- Run server using `python3 manage.py runserver
+- Run server using `python3 manage.py runserver`
 
 # Migrtion Scripts
 
