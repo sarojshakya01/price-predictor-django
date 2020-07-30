@@ -8,10 +8,13 @@ Price predictor using django
 2.  install Django framework using pip3 `pip3 install Django`
 3.  install mathfilters library using pip3 `pip3 install mathfilters`
 4.  install coverage library using pip3 `pip3 install coverage` to generate coverage report of unit test
-5.  create a directory using `mkdir fuelpricepredictor`
-6.  start a project using `django-admin startproject fuelpricepredictor`
-7.  go to project directory using `cd fuelpricepredictor`
-8.  start the sub project using `python3 manage.py startapp mainapp`
+5.  run `pip3 install psycopg2` for postgres database connection
+6.  run `pip3 install django-nose` for unit testing with coverage report
+7.  run `pip3 install mathfilters` for front end maths operations
+8.  create a directory using `mkdir fuelpricepredictor`
+9.  start a project using `django-admin startproject fuelpricepredictor`
+10. go to project directory using `cd fuelpricepredictor`
+11. start the sub project using `python3 manage.py startapp mainapp`
 
 # Running Server
 
