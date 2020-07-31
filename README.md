@@ -16,23 +16,24 @@ Price predictor using django
 10. go to project directory using `cd fuelpricepredictor`
 11. start the sub project using `python3 manage.py startapp mainapp`
 
-# Running Server
-
-- Run server using `python3 manage.py runserver`
-
 # Migrtion Scripts
 
 After creating any database model, migrate the model using following commands.
 
+- connect to the postgres database server
+- create a database 'pricepredictor' using `create database pricepredictor; commit;` or simply create from the GUI tool
 - `python3 manage.py makemigrations` to generate migration script files
-
 - `python3 manage.py migrate` to migrate the migration scripts
-
 - `python3 manage.py sqlmigrate mainapp 0001_initial` to migrate specific migration files
 
 # Create States records
 
-- run the scripts of scipts folder
+- run the scripts of ./scipts folder
+- uncomment the code ./mainapp/forms.py from line 26-29
+
+# Running Server
+
+- Run server using `python3 manage.py runserver`
 
 # If you are using django user tables
 

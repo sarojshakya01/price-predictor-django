@@ -23,10 +23,10 @@ class RegisterForm(forms.Form):
 
 class UserProfileForm(forms.Form):
     OPTIONS = [('', 'Select State')]
-    if(States):
-        states = States.objects.all()
-        for state in states:
-            OPTIONS.append((state.code, state.name))
+    # if(States):
+    #     states = States.objects.all()
+    #     for state in states:
+    #         OPTIONS.append((state.code, state.name))
 
     fullname = forms.CharField(label='Full Name', required=False, max_length=50,
                                widget=forms.TextInput(attrs={'placeholder': "Full Name"}))
