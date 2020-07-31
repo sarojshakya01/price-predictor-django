@@ -104,7 +104,7 @@ def user_profile(request):
 
         if (valid):
 
-            if (ClientInformations.objects.filter(userid=int(request.session['id'])).exists()):
+            if request.session.has_key('id') and (ClientInformations.objects.filter(userid=int(request.session['id'])).exists()):
                 user = int(request.session['id'])
                 userinfo = ClientInformations.objects.get(userid=user)
                 userinfo.fullname = form.cleaned_data['fullname']
