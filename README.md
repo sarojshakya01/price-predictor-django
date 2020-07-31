@@ -42,4 +42,4 @@ After creating any database model, migrate the model using following commands.
 # Unit Tests and coverage reports
 
 - Run `python3 manage.py test mainapp/tests.py` to run unit tests
-- Run `coverage run python3 manage.py test mainapp/tests.py` to run uni tests and generate coverage reports
+- Run `coverage run manage.py test mainapp/tests.py` to run uni tests and generate coverage reports
