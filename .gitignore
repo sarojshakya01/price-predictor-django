@@ -1,9 +1,9 @@
 .coverage
 
 /mainapp/__pycache__
-/mainapp/migrations/000*.py
-/mainapp/migrations/__pycache__
-/fuelpricepredictor/__pycache__
+# /mainapp/migrations/000*.py
+# /mainapp/migrations/__pycache__
+# /fuelpricepredictor/__pycache__
 /cover
 
 *.pyc
