@@ -83,6 +83,7 @@ def register(request):
             messages.error(
                 request, "Short Password or Password did not match!")
     else:
+        request.session.flush()
         form = RegisterForm(initial=initial_data)
     return render(request, 'register.html', {'form': form.as_p})
 
@@ -103,7 +104,6 @@ def user_profile(request):
         valid &= is_zip_valid(form.cleaned_data['zip'])
 
         if (valid):
-
             if request.session.has_key('id') and (ClientInformations.objects.filter(userid=int(request.session['id'])).exists()):
                 user = int(request.session['id'])
                 userinfo = ClientInformations.objects.get(userid=user)
