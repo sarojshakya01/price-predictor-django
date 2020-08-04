@@ -5,16 +5,34 @@ Price predictor using django
 # Steps Before running this project in your machine
 
 1.  install python3
-2.  install Django framework using pip3 `pip3 install Django`
-3.  install mathfilters library using pip3 `pip3 install mathfilters`
-4.  install coverage library using pip3 `pip3 install coverage` to generate coverage report of unit test
-5.  run `pip3 install psycopg2` for postgres database connection
-6.  run `pip3 install django-nose` for unit testing with coverage report
-7.  run `pip3 install mathfilters` for front end maths operations
-8.  create a directory using `mkdir fuelpricepredictor`
-9.  start a project using `django-admin startproject fuelpricepredictor`
-10. go to project directory using `cd fuelpricepredictor`
-11. start the sub project using `python3 manage.py startapp mainapp`
+2.  install postgresql(optional)
+3.  install Django framework using pip3 `pip3 install Django`
+4.  install mathfilters library using pip3 `pip3 install mathfilters`
+5.  install coverage library using pip3 `pip3 install coverage` to generate coverage report of unit test
+6.  run `pip3 install psycopg2` for postgres database connection (if you are using postgresql)
+7.  run `pip3 install django-nose` for unit testing with coverage report
+8.  run `pip3 install mathfilters` for front end maths operations
+9.  create a directory using `mkdir fuelpricepredictor`
+10. start a project using `django-admin startproject fuelpricepredictor`
+11. go to project directory using `cd fuelpricepredictor`
+12. start the sub project using `python3 manage.py startapp mainapp`
+
+# Database configuration
+
+1.  create a role using `creare role rol_name with encrypted password pass_word;`
+    for eg `creare role django with encrypted password ******;`
+2.  create database database_name in your db server using `create database database_name;`
+    for eg `create database pricepredicor;`
+3.  grant all accees on newly created db for newly created role using `grant all on database database_name to rol_name;`
+    for eg `grant all on database pricepredicor to django;`
+4.  give login access to the newly created role using `alter role role_name with login;`
+    for eg `alter role django with login;`
+
+# Database Settings
+
+- locate settings.py in fuelpricepredictor/fuelpricepredictor folder
+- go to line 94
+- put your dbname, role and password
 
 # Migrtion Scripts
 

@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'fuelpricepredictor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'django',
+        'NAME': '<dbname>',
+        'USER': '<user/role>',
+        'PASSWORD': '<password>',
         'HOST': 'localhost',
         'PORT': '5432',
     }
